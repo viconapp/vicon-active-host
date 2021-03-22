@@ -2,13 +2,14 @@ const $form = document.querySelector('#form-set-password');
 const $password = document.querySelector('#password');
 const $confirm_password = document.querySelector('#confirmpassword');
 const $loading = document.querySelector('#loading');
-// const _URL_SERVER = 'http://localhost:3000/api';
-const _URL_SERVER = 'https://vicon-api.herokuapp.com/api';
+const _URL_SERVER = 'http://localhost:3000/api';
+// const _URL_SERVER = 'https://vicon-api.herokuapp.com/api';
 let _HOST_ID;
 let _HOST_TOKEN = '0f4ac2645d797acbc65e036042006904364ed2a8a4ec0348c6e67c7204ff197b';
 
 const $div_success = document.querySelector('#success');
 const $div_error = document.querySelector('#error');
+const $div_warning = document.querySelector('#warning');
 const $lottie = document.querySelector('#lottie');
 
 (function () {
@@ -17,6 +18,7 @@ const $lottie = document.querySelector('#lottie');
   _HOST_ID = urlParams.get('_id');
   $div_success.style.display = 'none';
   $div_error.style.display = 'none';
+  $div_warning.style.display = 'none';
   $lottie.style.display = 'none';
   bodymovin.loadAnimation({
     container: document.getElementById('lottie2'),
@@ -54,7 +56,15 @@ const activeAccount = async password => {
   };
   await axios
     .put(`${_URL_SERVER}/auth-host/activate/${_HOST_ID}?token=${_HOST_TOKEN}`, data)
-    .then(() => {
+    .then(({ data }) => {
+      const { status } = data;
+      if (status) {
+        setTimeout(() => {
+          $div_warning.style.display = 'block';
+          $lottie.style.display = 'none';
+        }, 1000);
+        return;
+      }
       $form.reset();
       setTimeout(() => {
         $div_success.style.display = 'block';

@@ -104,6 +104,10 @@ form {
   font-size: 5em;
   color: #df8f8f;
 }
+.warning span {
+  font-size: 5em;
+  color: #fae56d;
+}
 
 .download {
   color: #5a7c9c;
