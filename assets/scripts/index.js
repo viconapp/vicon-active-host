@@ -1,6 +1,7 @@
 const $form = document.querySelector('#form-set-password');
 const $password = document.querySelector('#password');
 const $confirm_password = document.querySelector('#confirmpassword');
+const $loading = document.querySelector('#loading');
 // const _URL_SERVER = 'http://localhost:3000/api';
 const _URL_SERVER = 'https://vicon-api.herokuapp.com/api';
 let _HOST_ID;
@@ -17,6 +18,16 @@ const $lottie = document.querySelector('#lottie');
   $div_success.style.display = 'none';
   $div_error.style.display = 'none';
   $lottie.style.display = 'none';
+  bodymovin.loadAnimation({
+    container: document.getElementById('lottie2'),
+    path: './assets/static/logo.json',
+    renderer: 'svg/canvas/html',
+    loop: true,
+    autoplay: true,
+  });
+  setTimeout(() => {
+    $loading.style.display = 'none';
+  }, 1500);
 })();
 
 $form.addEventListener('submit', e => {
